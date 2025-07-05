@@ -15,9 +15,13 @@ A smart, responsive FAQ chatbot built with advanced Natural Language Processing 
 
 **Live Features:**
 🔍 Smart question matching
+
 📊 Confidence scoring
+
 💬 Interactive chat interface
+
 🎨 Modern glassmorphism design
+
 📱 Mobile-responsive layout
 
 **Quick Start**
