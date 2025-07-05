@@ -1,45 +1,47 @@
 # **codealpha_tasks-Chatbot-for-FAQs**
 ****FAQ Chatbot****
+
 A smart, responsive FAQ chatbot built with advanced Natural Language Processing (NLP) techniques. The chatbot uses multiple similarity algorithms to provide accurate answers to user questions with confidence scoring.
 
-Features
-Advanced NLP Processing: Uses cosine similarity, Jaccard similarity, and word overlap algorithms
-Multiple Interfaces: Standalone HTML, Python CLI, and Flask web application
-Confidence Scoring: Shows confidence levels for each response
-Real-time Processing: Instant responses with thinking indicators
-Responsive Design: Beautiful, modern UI with glassmorphism effects
-Quick Questions: Pre-defined common questions for easy access
-Extensible FAQ Database: Easy to add new questions and answers
 
-Live Features:
+**Features**
+1. **Advanced NLP Processing:** Uses cosine similarity, Jaccard similarity, and word overlap algorithms
+2. **Multiple Interfaces:** Standalone HTML, Python CLI, and Flask web application
+3. **Confidence Scoring:** Shows confidence levels for each response
+4. **Real-time Processing:** Instant responses with thinking indicators
+5. **Responsive Design:** Beautiful, modern UI with glassmorphism effects
+6. **Quick Questions:** Pre-defined common questions for easy access
+7. **Extensible FAQ Database:** Easy to add new questions and answers
+
+**Live Features:**
 🔍 Smart question matching
 📊 Confidence scoring
 💬 Interactive chat interface
 🎨 Modern glassmorphism design
 📱 Mobile-responsive layout
 
-Quick Start
+**Quick Start**
 
-Clone the repository
+* Clone the repository
 bashgit clone https://github.com/yourusername/faq-chatbot.git
 cd faq-chatbot
 
-Install dependencies
+* Install dependencies
 bashpip install -r requirements.txt
 
-Run the application
-Option 1: Flask Web App (Recommended)
+* Run the application
+**Option 1:** Flask Web App (Recommended)
 bashpython app.py
 Open your browser and go to http://localhost:5000
 
-Option 2: Python CLI
+**Option 2:** Python CLI
 bashpython chatbot.py
 
-Option 3: Standalone HTML
+**Option 3:** Standalone HTML
 bash# Open the HTML file directly in your browser
 open index.html
 
-Project Structure
+**Project Structure**
 faq-chatbot/
 ├── app.py                 # Flask web application
 ├── chatbot.py            # Python CLI version
@@ -48,15 +50,15 @@ faq-chatbot/
 ├── README.md            # This file
 └── screenshots/         # Demo screenshots
 
-Example Questions
+**Example Questions**
 
-"How do I reset my password?"
-"What are your business hours?"
-"How do I contact support?"
-"What payment methods do you accept?"
-"How do I cancel my subscription?"
+I]   "How do I reset my password?"
+II]  "What are your business hours?"
+III] "How do I contact support?"
+IV]  "What payment methods do you accept?"
+V]   "How do I cancel my subscription?"
 
-Adding New FAQs
+**Adding New FAQs**
 
 {
     "question": "Your new question?",
