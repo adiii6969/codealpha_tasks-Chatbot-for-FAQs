@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-header {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .chat-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .chat-header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 12px;
+            height: 12px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #f1f3f4;
+            color: #333;
+            align-self: flex-start;
+            border: 1px solid #e0e0e0;
+        }
+
+        .bot-message.thinking {
+            background: linear-gradient(90deg, #f1f3f4, #e8eaf6, #f1f3f4);
+            background-size: 200% 100%;
+            animation: thinking 1.5s ease-in-out infinite;
+        }
+
+        @keyframes thinking {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff0707 0%, #75ff68 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quick-questions {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .quick-questions h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .quick-question-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .quick-question-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .quick-question-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        .confidence-score {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="status-indicator"></div>
+            <h1> FAQ Assistant</h1>
+            <p>Ask me anything about our products and services!</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                👋 Welcome! I'm here to help answer your questions. Type your question below or click on a quick question to get started.
+            </div>
+        </div>
+
+        <div class="quick-questions">
+            <h3>💡 Quick Questions:</h3>
+            <div class="quick-question-buttons">
+                <button class="quick-question-btn" onclick="askQuestion('How do I reset my password?')">Reset Password</button>
+                <button class="quick-question-btn" onclick="askQuestion('What are your business hours?')">Business Hours</button>
+                <button class="quick-question-btn" onclick="askQuestion('How do I contact support?')">Contact Support</button>
+                <button class="quick-question-btn" onclick="askQuestion('What payment methods do you accept?')">Payment Methods</button>
+                <button class="quick-question-btn" onclick="askQuestion('How do I cancel my subscription?')">Cancel Subscription</button>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type your question here..." onkeypress="handleKeyPress(event)">
+            <button class="send-button" onclick="sendMessage()" id="sendButton">
+                <span>Send</span>
+                <span>🚀</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // FAQ Database with enhanced NLP preprocessing
+        const faqDatabase = [
+            {
+                question: "How do I reset my password?",
+                answer: "To reset your password: 1) Go to the login page, 2) Click 'Forgot Password', 3) Enter your email address, 4) Check your email for reset instructions, 5) Follow the link and create a new password. If you don't receive the email, check your spam folder.",
+                keywords: ["reset", "password", "forgot", "login", "email", "account", "access"]
+            },
+            {
+                question: "What are your business hours?",
+                answer: "Our business hours are Monday to Friday: 9:00 AM - 6:00 PM EST. We're closed on weekends and major holidays. For urgent matters outside business hours, please use our emergency contact form.",
+                keywords: ["hours", "time", "open", "closed", "schedule", "business", "monday", "friday", "weekend"]
+            },
+            {
+                question: "How do I contact support?",
+                answer: "You can contact our support team through: 1) Email: support@company.com, 2) Phone: 1-800-SUPPORT, 3) Live chat on our website, 4) Submit a ticket through your account dashboard. Average response time is 2-4 hours.",
+                keywords: ["contact", "support", "help", "email", "phone", "chat", "ticket", "assistance"]
+            },
+            {
+                question: "What payment methods do you accept?",
+                answer: "We accept all major payment methods including: Credit cards (Visa, MasterCard, American Express), PayPal, Bank transfers, and digital wallets (Apple Pay, Google Pay). All payments are processed securely.",
+                keywords: ["payment", "pay", "credit", "card", "paypal", "bank", "visa", "mastercard", "money", "billing"]
+            },
+            {
+                question: "How do I cancel my subscription?",
+                answer: "To cancel your subscription: 1) Log into your account, 2) Go to 'Account Settings', 3) Click 'Subscription', 4) Select 'Cancel Subscription', 5) Follow the confirmation steps. You'll retain access until your current billing period ends.",
+                keywords: ["cancel", "subscription", "account", "billing", "end", "stop", "terminate", "unsubscribe"]
+            },
+            {
+                question: "How do I update my profile information?",
+                answer: "To update your profile: 1) Sign in to your account, 2) Click on your profile picture or name, 3) Select 'Edit Profile', 4) Update your information, 5) Click 'Save Changes'. Changes take effect immediately.",
+                keywords: ["update", "profile", "edit", "information", "details", "account", "personal", "change"]
+            },
+            {
+                question: "What is your refund policy?",
+                answer: "We offer a 30-day money-back guarantee. To request a refund: 1) Contact support within 30 days of purchase, 2) Provide your order number, 3) Explain the reason for refund. Refunds are processed within 5-7 business days.",
+                keywords: ["refund", "money", "back", "return", "guarantee", "policy", "purchase", "order"]
+            },
+            {
+                question: "How do I upgrade my plan?",
+                answer: "To upgrade your plan: 1) Go to 'Account Settings', 2) Click 'Subscription', 3) Choose 'Upgrade Plan', 4) Select your desired plan, 5) Complete payment. Upgrades are effective immediately with prorated billing.",
+                keywords: ["upgrade", "plan", "subscription", "premium", "account", "billing", "features", "tier"]
+            }
+        ];
+
+        // Advanced text preprocessing
+        function preprocessText(text) {
+            return text.toLowerCase()
+                      .replace(/[^\w\s]/g, ' ')
+                      .replace(/\s+/g, ' ')
+                      .trim()
+                      .split(' ')
+                      .filter(word => word.length > 2);
+        }
+
+        // Cosine similarity calculation
+        function calculateCosineSimilarity(vec1, vec2) {
+            const intersection = vec1.filter(x => vec2.includes(x));
+            const magnitude1 = Math.sqrt(vec1.length);
+            const magnitude2 = Math.sqrt(vec2.length);
+            
+            if (magnitude1 === 0 || magnitude2 === 0) return 0;
+            
+            return intersection.length / (magnitude1 * magnitude2);
+        }
+
+        // Enhanced FAQ matching with multiple techniques
+        function findBestMatch(userQuestion) {
+            const userWords = preprocessText(userQuestion);
+            let bestMatch = null;
+            let highestScore = 0;
+
+            faqDatabase.forEach(faq => {
+                // Method 1: Keyword matching
+                const keywordScore = calculateCosineSimilarity(userWords, faq.keywords);
+                
+                // Method 2: Question similarity
+                const questionWords = preprocessText(faq.question);
+                const questionScore = calculateCosineSimilarity(userWords, questionWords);
+                
+                // Method 3: Direct word overlap
+                const overlapScore = userWords.filter(word => 
+                    faq.keywords.some(keyword => keyword.includes(word) || word.includes(keyword))
+                ).length / userWords.length;
+
+                // Combined scoring with weights
+                const finalScore = (keywordScore * 0.4) + (questionScore * 0.3) + (overlapScore * 0.3);
+
+                if (finalScore > highestScore) {
+                    highestScore = finalScore;
+                    bestMatch = { ...faq, confidence: Math.round(finalScore * 100) };
+                }
+            });
+
+            return highestScore > 0.1 ? bestMatch : null;
+        }
+
+        // Chat functionality
+        function addMessage(content, isUser = false, confidence = null) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            let messageContent = content;
+            if (!isUser && confidence) {
+                messageContent += `<div class="confidence-score">Confidence: ${confidence}%</div>`;
+            }
+            
+            messageDiv.innerHTML = messageContent;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showThinking() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const thinkingDiv = document.createElement('div');
+            thinkingDiv.className = 'message bot-message thinking';
+            thinkingDiv.innerHTML = '🤔 Thinking...';
+            thinkingDiv.id = 'thinking-message';
+            messagesContainer.appendChild(thinkingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeThinking() {
+            const thinkingMessage = document.getElementById('thinking-message');
+            if (thinkingMessage) {
+                thinkingMessage.remove();
+            }
+        }
+
+        function processQuestion(question) {
+            showThinking();
+            
+            setTimeout(() => {
+                removeThinking();
+                
+                const match = findBestMatch(question);
+                
+                if (match && match.confidence > 30) {
+                    addMessage(match.answer, false, match.confidence);
+                } else {
+                    const fallbackMessage = `I'm not sure about that specific question. Here are some ways I can help you:
+                    <br><br>
+                    • Try rephrasing your question
+                    • Use the quick questions below
+                    • Contact our support team at support@company.com
+                    • Call us at 1-800-SUPPORT
+                    <br><br>
+                    Is there anything else I can help you with?`;
+                    addMessage(fallbackMessage);
+                }
+            }, 1000 + Math.random() * 1000); // Simulate processing time
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const question = input.value.trim();
+            
+            if (question === '') return;
+            
+            addMessage(question, true);
+            input.value = '';
+            
+            processQuestion(question);
+        }
+
+        function askQuestion(question) {
+            document.getElementById('chatInput').value = question;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Auto-focus input on load
+        window.onload = function() {
+            document.getElementById('chatInput').focus();
+        };
+    </script>
+</body>
+</html>
