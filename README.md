@@ -1,8 +1,13 @@
 # **codealpha_tasks-Chatbot-for-FAQs**
-#****FAQ Chatbot****
+****FAQ Chatbot****
 
 A smart, responsive FAQ chatbot built with advanced Natural Language Processing (NLP) techniques. The chatbot uses multiple similarity algorithms to provide accurate answers to user questions with confidence scoring.
 
+**FLASK WEB APP VERSION**
+![image_alt](https://github.com/adiii6969/codealpha_tasks-Chatbot-for-FAQs/blob/main/flask_web_app/app.png)
+
+**STATIC VERSION**
+![image_alt](https://github.com/adiii6969/codealpha_tasks-Chatbot-for-FAQs/blob/main/static_version/chatbot.png)
 
 **Features**
 1. **Advanced NLP Processing:** Uses cosine similarity, Jaccard similarity, and word overlap algorithms
@@ -84,12 +89,9 @@ V]   "How do I cancel my subscription?"
     "keywords": ["keyword1", "keyword2", "keyword3"]
 }
 
-**FLASK WEB APP VERSION**
-![image_alt](https://github.com/adiii6969/codealpha_tasks-Chatbot-for-FAQs/blob/main/flask_web_app/app.png)
+
 
 **PYTHON VERSION**
 ![image_alt](https://github.com/adiii6969/codealpha_tasks-Chatbot-for-FAQs/blob/main/python_version/faq_chatbot.png)
 
 
-**STATIC VERSION**
-![image_alt](https://github.com/adiii6969/codealpha_tasks-Chatbot-for-FAQs/blob/main/static_version/chatbot.png)
