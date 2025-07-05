@@ -1,5 +1,5 @@
 # **codealpha_tasks-Chatbot-for-FAQs**
-FAQ Chatbot 
+****FAQ Chatbot****
 A smart, responsive FAQ chatbot built with advanced Natural Language Processing (NLP) techniques. The chatbot uses multiple similarity algorithms to provide accurate answers to user questions with confidence scoring.
 
 Features
