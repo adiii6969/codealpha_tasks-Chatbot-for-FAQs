@@ -51,27 +51,6 @@ bashpython chatbot.py
 bash# Open the HTML file directly in your browser
 open faq_chatbot.html
 
-**Project Structure**
-
-faq-chatbot/
-
-flask_web_app/
-
-├── app.py                 # Flask web application
-
-python_version/
-
-├── chatbot.py            # Python CLI version
-
-static_version/
-
-├── faq_chatbot.html            # Standalone HTML version
-
-├── requirements.txt      # Python dependencies
-
-└── README.md            # This file
-
-
 **Example Questions**
 
 I]   "How do I reset my password?"
