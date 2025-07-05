@@ -56,10 +56,15 @@ open faq_chatbot.html
 faq-chatbot/
 
 flask_web_app/
+
 ├── app.py                 # Flask web application
+
 python_version/
+
 ├── chatbot.py            # Python CLI version
+
 static_version/
+
 ├── faq_chatbot.html            # Standalone HTML version
 
 ├── requirements.txt      # Python dependencies
