@@ -34,6 +34,7 @@ cd faq-chatbot
 bashpip install -r requirements.txt
 
 * Run the application
+  
 **Option 1:** Flask Web App (Recommended)
 bashpython app.py
 Open your browser and go to http://localhost:5000
@@ -46,26 +47,39 @@ bash# Open the HTML file directly in your browser
 open index.html
 
 **Project Structure**
+
 faq-chatbot/
+
 ├── app.py                 # Flask web application
+
 ├── chatbot.py            # Python CLI version
+
 ├── index.html            # Standalone HTML version
+
 ├── requirements.txt      # Python dependencies
+
 ├── README.md            # This file
+
 └── screenshots/         # Demo screenshots
 
 **Example Questions**
 
 I]   "How do I reset my password?"
+
 II]  "What are your business hours?"
+
 III] "How do I contact support?"
+
 IV]  "What payment methods do you accept?"
+
 V]   "How do I cancel my subscription?"
 
 **Adding New FAQs**
 
 {
     "question": "Your new question?",
+
     "answer": "Your detailed answer here...",
+    
     "keywords": ["keyword1", "keyword2", "keyword3"]
 }
