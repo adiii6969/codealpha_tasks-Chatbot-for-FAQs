@@ -49,23 +49,23 @@ bashpython chatbot.py
 
 **Option 3:** Standalone HTML
 bash# Open the HTML file directly in your browser
-open index.html
+open faq_chatbot.html
 
 **Project Structure**
 
 faq-chatbot/
 
+flask_web_app/
 ├── app.py                 # Flask web application
-
+python_version/
 ├── chatbot.py            # Python CLI version
-
-├── index.html            # Standalone HTML version
+static_version/
+├── faq_chatbot.html            # Standalone HTML version
 
 ├── requirements.txt      # Python dependencies
 
-├── README.md            # This file
+└── README.md            # This file
 
-└── screenshots/         # Demo screenshots
 
 **Example Questions**
 
