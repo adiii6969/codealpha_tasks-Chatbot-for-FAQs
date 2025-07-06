@@ -19,6 +19,7 @@ A smart, responsive FAQ chatbot built with advanced Natural Language Processing 
 7. **Extensible FAQ Database:** Easy to add new questions and answers
 
 **Live Features:**
+
 🔍 Smart question matching
 
 📊 Confidence scoring
@@ -33,6 +34,7 @@ A smart, responsive FAQ chatbot built with advanced Natural Language Processing 
 
 * Clone the repository
 bashgit clone https://github.com/yourusername/faq-chatbot.git
+
 cd faq-chatbot
 
 * Install dependencies
